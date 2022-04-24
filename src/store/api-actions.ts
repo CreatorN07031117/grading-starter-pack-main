@@ -35,15 +35,16 @@ export const fetchQuest = createAsyncThunk <void, string, {
   },
 );
 
-export const bookQuest = createAsyncThunk<void, Order, {
+export const postOrder = createAsyncThunk<void, Order, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance,
 }>(
-  'data/addReview',
+  'data/postOrder',
   async ({name, peopleCount, phone, isLegal}, {dispatch, extra: api}) => {
     try {
       await api.post(`/orders`, {name, peopleCount, phone, isLegal});
+
     } catch (error) {
       errorHandle(error);
     }
