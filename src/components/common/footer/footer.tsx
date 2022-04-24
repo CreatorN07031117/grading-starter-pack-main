@@ -1,6 +1,8 @@
+import React from 'react';
 import * as S from './footer.styled';
 
-const Footer = () => (
+function Footer (): JSX.Element  {
+  return (
   <S.StyledFooter>
     <S.Socials>
       <S.SocialItem>
@@ -17,6 +19,7 @@ const Footer = () => (
       </S.SocialItem>
     </S.Socials>
   </S.StyledFooter>
-);
+  );
+}
 
 export default Footer;

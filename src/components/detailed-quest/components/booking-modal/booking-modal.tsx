@@ -1,7 +1,18 @@
+import { useRef, FormEvent } from 'react';
+import { ReactComponent as IconClose } from '../../../../assets/img/icon-close.svg';
 import * as S from './booking-modal.styled';
-import { ReactComponent as IconClose } from 'assets/img/icon-close.svg';
 
-const BookingModal = () => (
+
+function BookingModal (): JSX.Element {
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const phoneRef = useRef<HTMLInputElement | null>(null);
+  const peopleRef = useRef<HTMLInputElement | null>(null);
+
+  const onSubmit = (authData: AuthData) => {
+
+  };
+
+  return (
   <S.BlockLayer>
     <S.Modal>
       <S.ModalCloseBtn>
@@ -48,7 +59,7 @@ const BookingModal = () => (
             required
           />
         </S.BookingField>
-        <S.BookingSubmit type="submit">Отправить заявку</S.BookingSubmit>
+        <S.BookingSubmit /*type="submit"*/>Отправить заявку</S.BookingSubmit>
         <S.BookingCheckboxWrapper>
           <S.BookingCheckboxInput
             type="checkbox"
@@ -72,6 +83,6 @@ const BookingModal = () => (
       </S.BookingForm>
     </S.Modal>
   </S.BlockLayer>
-);
+);}
 
 export default BookingModal;

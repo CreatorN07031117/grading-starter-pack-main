@@ -1,8 +1,10 @@
-import { MainLayout, PageTitle, PageSubtext } from 'components/common/common';
-import contactsMap from 'assets/img/contacts-map.jpg';
+import React from 'react';
+import {MainLayout, PageTitle, PageSubtext} from '../../components/common/common';
+import contactsMap from '../../assets/img/contacts-map.jpg';
 import * as S from './contacts.styled';
 
-const Contacts = () => (
+function Contacts (): JSX.Element {
+  return (
   <MainLayout>
     <S.Main>
       <S.ContentWrapper>
@@ -52,6 +54,7 @@ const Contacts = () => (
       </S.ContentWrapper>
     </S.Main>
   </MainLayout>
-);
+  );
+}
 
 export default Contacts;
