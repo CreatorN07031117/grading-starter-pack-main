@@ -27,4 +27,7 @@ const appTheme = {
   },
 };
 
+type AppThemeType = typeof appTheme;
+
 export { appTheme };
+export type { AppThemeType }

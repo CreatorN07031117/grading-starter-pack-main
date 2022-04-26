@@ -1,10 +1,11 @@
-import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import DetailedQuest from '../detailed-quest/detailed-quest';
 import Contacts from '../contacts/contacts';
 import Home from '../home/home';
+import CoomingSoon from '../cooming-soon/cooming-soon';
 import NotFoundPage from '../not-found-page/not-found-page';
+import { AppRoute } from '../../const';
 import { appTheme } from './common';
 import * as S from './app.styled';
 
@@ -14,10 +15,11 @@ function App (): JSX.Element {
     <ThemeProvider theme={appTheme}>
       <S.GlobalStyle />
       <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='detailed-quest/:id' element={<DetailedQuest />} />
-          <Route path='contacts' element={<Contacts />} />
-          <Route path='*' element={<NotFoundPage />} />
+          <Route path={AppRoute.Index} element={<Home />} />
+          <Route path={AppRoute.Quest} element={<DetailedQuest />} />
+          <Route path={AppRoute.Contacts} element={<Contacts />} />
+          <Route path={AppRoute.CoomingSoon} element={<CoomingSoon />} />
+          <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
       </Routes>
     </ThemeProvider>
   );

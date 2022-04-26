@@ -1,41 +1,42 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { AppRoute } from '../../../const';
 import logo from '../../../assets/img/logo.svg';
 import * as S from './header.styled';
 
 function Header (): JSX.Element {
+  const location = useLocation();
+
+  console.log(location)
 
   return (
   <S.StyledHeader>
     <S.HeaderWrapper>
       <S.Logo>
-        <Link to='/'>
-          <S.Image src={logo} alt="Логотип Escape Room" width="134" height="50" />
-        </Link>
+        <S.Image src={logo} alt="Логотип Escape Room" width="134" height="50" />
       </S.Logo>
 
       <S.Navigation>
       <S.Links>
           <S.LinkItem>
-            <S.Link /*$isActiveLink*/ to='/'>
+            <S.Link $isActiveLink={location.pathname === AppRoute.Index}  to={AppRoute.Index}>
               Квесты
             </S.Link>
           </S.LinkItem>
 
           <S.LinkItem>
-            <S.Link to="#">Новичкам</S.Link>
+            <S.Link to={AppRoute.CoomingSoon}>Новичкам</S.Link>
           </S.LinkItem>
 
           <S.LinkItem>
-            <S.Link to="#">Отзывы</S.Link>
+            <S.Link to={AppRoute.CoomingSoon}>Отзывы</S.Link>
           </S.LinkItem>
 
           <S.LinkItem>
-            <S.Link to="#">Акции</S.Link>
+            <S.Link to={AppRoute.CoomingSoon}>Акции</S.Link>
           </S.LinkItem>
 
           <S.LinkItem>
-            <S.Link to='/contacts'>Контакты</S.Link>
+            <S.Link $isActiveLink={location.pathname === AppRoute.Contacts} to={AppRoute.Contacts}>Контакты</S.Link>
           </S.LinkItem>
         </S.Links>
       </S.Navigation>

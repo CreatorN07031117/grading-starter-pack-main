@@ -5,7 +5,8 @@ import { MainLayout } from '../../components/common/common';
 import { BookingModal } from './components/components';
 import { store } from '../../store/store';
 import { fetchQuest } from '../../store/api-actions';
-import { QuestType, QuestTypeName } from '../../const';
+import Preloader from '../preloader/preloader';
+import { QUEST_TYPE_NAMES, LEVELS } from '../../const';
 import { ReactComponent as IconClock } from '../../assets/img/icon-clock.svg';
 import { ReactComponent as IconPerson } from '../../assets/img/icon-person.svg';
 import { ReactComponent as IconPuzzle } from '../../assets/img/icon-puzzle.svg';
@@ -20,7 +21,7 @@ function DetailedQuest (): JSX.Element {
     store.dispatch(fetchQuest(params.id as string));
   }, [params.id]);
 
-  const {quest} = useAppSelector(({QUEST}) => QUEST);
+  const {quest, isDataLoaded} = useAppSelector(({QUEST}) => QUEST);
 
   const [isBookingModalOpened, setIsBookingModalOpened] = useState(false);
 
@@ -28,7 +29,37 @@ function DetailedQuest (): JSX.Element {
     setIsBookingModalOpened(true);
   };
 
-  const  questTypeName = quest.type;
+  const type = QUEST_TYPE_NAMES.map(function (item): string {
+      if (quest.type === item.key) {
+        return item.value;
+      };
+
+      return '';
+    }
+  )
+
+  const level = LEVELS.map(function (item): string {
+      if (quest.level === item.key) {
+        return item.value;
+      };
+
+      return '';
+    }
+  )
+
+  let peopleMin = 0
+  let peopleMax = 0
+
+  if(quest.peopleCount !== undefined){
+  peopleMin = quest.peopleCount[0];
+  peopleMax = quest.peopleCount[1];
+}
+
+  if(!isDataLoaded) {
+   return (
+     <Preloader />
+   )
+  }
 
   return (
     <MainLayout>
@@ -42,7 +73,7 @@ function DetailedQuest (): JSX.Element {
         <S.PageContentWrapper>
           <S.PageHeading>
             <S.PageTitle>{quest.title}</S.PageTitle>
-            <S.PageSubtitle>{questTypeName}</S.PageSubtitle>
+            <S.PageSubtitle>{type}</S.PageSubtitle>
           </S.PageHeading>
 
           <S.PageDescription>
@@ -53,11 +84,11 @@ function DetailedQuest (): JSX.Element {
               </S.FeaturesItem>
               <S.FeaturesItem>
                 <IconPerson width="19" height="24" />
-                <S.FeatureTitle>{`чел`}</S.FeatureTitle>
+                <S.FeatureTitle>{`${peopleMin} — ${peopleMax} чел`}</S.FeatureTitle>
               </S.FeaturesItem>
               <S.FeaturesItem>
                 <IconPuzzle width="24" height="24" />
-                <S.FeatureTitle>{quest.level}</S.FeatureTitle>
+                <S.FeatureTitle>{level}</S.FeatureTitle>
               </S.FeaturesItem>
             </S.Features>
 

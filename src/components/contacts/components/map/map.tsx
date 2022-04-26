@@ -1,24 +1,41 @@
-import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
-import "leaflet/dist/leaflet.css";
+import { useRef, useEffect } from 'react';
+import leaflet from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import useMap from '../../../../hooks/use-map';
+import { ADDRESS_POINT } from '../../../../const'
 
 
-function Map (): JSX.Element {
+function Map() {
+  const mapRef = useRef(null);
+  const map = useMap(mapRef, ADDRESS_POINT);
+
+  const defaultCustomIcon = leaflet.icon({
+    iconUrl: '/map-bubble.png',
+    iconSize: [56, 70],
+    iconAnchor: [20, 40],
+  });
 
 
+  useEffect(() => {
+    if (map) {
+        leaflet
+          .marker({
+            lat: ADDRESS_POINT.lat,
+            lng: ADDRESS_POINT.lng,
+          }, {
+            icon: defaultCustomIcon,
+          })
+          .addTo(map);
+      };
+  }, [defaultCustomIcon, map]);
 
-return (
-  <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-    <TileLayer
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    />
-    <Marker position={[51.505, -0.09]}>
-      <Popup>
-        A pretty CSS3 popup. <br /> Easily customizable.
-      </Popup>
-    </Marker>
-  </MapContainer>
-  )
+  return (
+    <div
+      style={{width: '695px', height: '336px'}}
+      ref={mapRef}
+    >
+    </div>
+  );
 }
 
 export default Map;

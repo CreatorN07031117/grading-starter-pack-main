@@ -1,4 +1,4 @@
-import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
+import axios, {AxiosInstance} from 'axios';
 import {BACKEND_URL, REQUEST_TIMEOUT} from '../const';
 
 

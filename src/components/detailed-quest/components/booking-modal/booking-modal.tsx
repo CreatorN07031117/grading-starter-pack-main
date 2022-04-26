@@ -1,20 +1,20 @@
 import { useRef, FormEvent} from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import { ReactComponent as IconClose } from '../../../../assets/img/icon-close.svg';
 import { postOrder } from '../../../../store/api-actions';
 import { useAppDispatch } from '../../../../hooks/hooks';
 import { Order } from '../../../../types/main-types';
 import * as S from './booking-modal.styled';
 
+
 type BookingModalProps = {
   onBookingModalClose: (item: boolean) => void;
 }
 
+const phoneRE = /^\+?([0-9_-]{10,16})$/i;
+
 function BookingModal ({onBookingModalClose}:BookingModalProps): JSX.Element {
 
-  const params = useParams();
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const nameRef = useRef<HTMLInputElement | null>(null);
@@ -26,24 +26,23 @@ function BookingModal ({onBookingModalClose}:BookingModalProps): JSX.Element {
     dispatch(postOrder(orderData));
   };
 
-  const notifySucces =  ( )  =>  toast ('Ваша заявка принята. Наш менеджер свяжется с вами в течение часа');
-  const notifyFail =  ( )  =>  toast ('Номер телефона должен быть 10 символов');
+  const notify = (text: string) => toast (text);
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if(phoneRef.current?.value.length !== undefined && phoneRef.current?.value.length === 10){
+    if(phoneRef.current?.value.length !== undefined && phoneRE.test(phoneRef.current?.value as string)){
       onSubmit ({
         name: nameRef.current?.value as string,
         phone: phoneRef.current?.value as string,
         peopleCount: Number(peopleRef.current?.value),
         isLegal: true,
       });
-      notifySucces();
+      notify('Ваша заявка принята. Наш менеджер свяжется с вами в течение часа');
       return onBookingModalClose(false);
     }
 
-    return notifyFail();
+    return notify('Некорректный номер телефона');
     };
 
   return (

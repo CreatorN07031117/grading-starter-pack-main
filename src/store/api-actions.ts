@@ -5,6 +5,7 @@ import { redirectToRoute } from './action';
 import { loadQuests } from './quests-process/quests-process';
 import { loadQuest } from './quest-process/quest-process';
 import { errorHandle } from '../services/error-handle';
+import { APIRoute } from '../const';
 
 
 export const fetchQuestsAction = createAsyncThunk <void, undefined, {
@@ -14,8 +15,12 @@ export const fetchQuestsAction = createAsyncThunk <void, undefined, {
 }>(
   'data/fetchQuests',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<Quests>('/quests');
-    dispatch(loadQuests(data));
+    try {
+      const {data} = await api.get<Quests>(APIRoute.Quests);
+      dispatch(loadQuests(data));
+    } catch (error) {
+      errorHandle(error);
+    }
   }
 );
 
@@ -27,7 +32,7 @@ export const fetchQuest = createAsyncThunk <void, string, {
   'data/fetchQuests',
   async (id, {dispatch, extra: api}) => {
     try {
-      const {data} = await api.get(`/quests/${id}`);
+      const {data} = await api.get(`${APIRoute.Quest}${id}`);
       dispatch(loadQuest(data));
     } catch (error) {
       dispatch(redirectToRoute('/*'));
@@ -43,8 +48,7 @@ export const postOrder = createAsyncThunk<void, Order, {
   'data/postOrder',
   async ({name, peopleCount, phone, isLegal}, {dispatch, extra: api}) => {
     try {
-      await api.post(`/orders`, {name, peopleCount, phone, isLegal});
-
+      await api.post(APIRoute.Orders, {name, peopleCount, phone, isLegal});
     } catch (error) {
       errorHandle(error);
     }

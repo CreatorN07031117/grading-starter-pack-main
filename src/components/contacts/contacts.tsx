@@ -1,7 +1,6 @@
 import React from 'react';
 import { MainLayout, PageTitle, PageSubtext } from '../../components/common/common';
-import Map from './components/map/map';
-import contactsMap from '../../assets/img/contacts-map.jpg';
+import Map from './components/map/map'
 import * as S from './contacts.styled';
 
 function Contacts (): JSX.Element {
@@ -44,7 +43,7 @@ function Contacts (): JSX.Element {
           </S.ContactsList>
 
           <S.ContactsMap>
-            <Map />
+             <Map />
           </S.ContactsMap>
         </S.Contacts>
       </S.ContentWrapper>

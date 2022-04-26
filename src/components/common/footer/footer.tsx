@@ -1,4 +1,3 @@
-import React from 'react';
 import * as S from './footer.styled';
 
 function Footer (): JSX.Element  {

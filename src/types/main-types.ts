@@ -27,12 +27,18 @@ export type State = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export type QuestsProcess = {
-  activeType: string;
   quests: Quests,
 };
 
 export type QuestProcess = {
   quest: Quest,
+  isDataLoaded: boolean,
 };
 
 export type ErrorType = unknown;
+
+export type AddressPoint = {
+  lat: number,
+  lng: number,
+  zoom: number
+}

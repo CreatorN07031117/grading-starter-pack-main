@@ -1,8 +1,7 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../../hooks/hooks';
-import { QuestType } from '../../../../const';
+import { useState } from 'react';
+import { useAppSelector } from '../../../../hooks/hooks';
+import { QuestType, LEVELS } from '../../../../const';
 import { Quest } from '../../../../types/main-types';
-import { selectType, getQuests } from '../../../../store/quests-process/quests-process';
 import { ReactComponent as IconAllQuests } from '../../../../assets/img/icon-all-quests.svg';
 import { ReactComponent as IconAdventures } from '../../../../assets/img/icon-adventures.svg';
 import { ReactComponent as IconHorrors } from '../../../../assets/img/icon-horrors.svg';
@@ -13,9 +12,10 @@ import { ReactComponent as IconPerson } from '../../../../assets/img/icon-person
 import { ReactComponent as IconPuzzle } from '../../../../assets/img/icon-puzzle.svg';
 import * as S from './quests-catalog.styled';
 
-function QuestsCatalog (): JSX.Element {
-  const dispatch = useAppDispatch();
-  const{activeType, quests} = useAppSelector(({QUESTS}) => QUESTS);
+const QuestsCatalog = () => {
+  const [activeType, setActiveType] = useState(QuestType.All)
+
+  const{quests} = useAppSelector(({QUESTS}) => QUESTS);
 
   let questsInList = quests;
 
@@ -23,17 +23,15 @@ function QuestsCatalog (): JSX.Element {
     questsInList = quests.slice().filter((item: Quest) => item.type === activeType)
   }
 
-  const handleClick = (item: string) => {
-    dispatch(selectType(item));
-    dispatch(getQuests());
+  const handleClick = (item: QuestType) => {
+    setActiveType(item)
   }
 
-  return (
-  <>
+  return (<>
     <S.Tabs>
       <S.TabItem>
         <S.TabBtn
-          {...QuestType.All === activeType && 'isActive'}
+          isActive={QuestType.All === activeType}
           onClick={() => handleClick(QuestType.All)}
         >
           <IconAllQuests />
@@ -43,7 +41,7 @@ function QuestsCatalog (): JSX.Element {
 
       <S.TabItem>
         <S.TabBtn
-          {...QuestType.Adventures === activeType && 'isActive'}
+          isActive={QuestType.Adventures === activeType}
           onClick={() => handleClick(QuestType.Adventures)}
         >
           <IconAdventures />
@@ -53,7 +51,7 @@ function QuestsCatalog (): JSX.Element {
 
       <S.TabItem>
         <S.TabBtn
-          {...QuestType.Horror === activeType && 'isActive'}
+          isActive={QuestType.Horror === activeType}
           onClick={() => handleClick(QuestType.Horror)}
         >
           <IconHorrors />
@@ -63,7 +61,7 @@ function QuestsCatalog (): JSX.Element {
 
       <S.TabItem>
         <S.TabBtn
-          {...QuestType.Mystic === activeType && 'isActive'}
+          isActive={QuestType.Mystic === activeType}
           onClick={() => handleClick(QuestType.Mystic)}
         >
           <IconMystic />
@@ -73,7 +71,7 @@ function QuestsCatalog (): JSX.Element {
 
       <S.TabItem>
         <S.TabBtn
-          {...QuestType.Detective === activeType && 'isActive'}
+          isActive={QuestType.Detective === activeType}
           onClick={() => handleClick(QuestType.Detective)}
         >
           <IconDetective />
@@ -83,7 +81,7 @@ function QuestsCatalog (): JSX.Element {
 
       <S.TabItem>
         <S.TabBtn
-          {...QuestType.SciFi === activeType && 'isActive'}
+          isActive={QuestType.SciFi === activeType}
           onClick={() => handleClick(QuestType.SciFi)}
         >
           <IconScifi />
@@ -115,7 +113,10 @@ function QuestsCatalog (): JSX.Element {
                 </S.QuestFeatureItem>
                 <S.QuestFeatureItem>
                   <IconPuzzle />
-                  {item.level}
+                  {LEVELS.map(function (level): string {
+                      if (item.level === level.key) { return level.value; }
+                      return '';
+                    })}
                 </S.QuestFeatureItem>
               </S.QuestFeatures>
             </S.QuestContent>
