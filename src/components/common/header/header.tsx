@@ -6,8 +6,6 @@ import * as S from './header.styled';
 function Header (): JSX.Element {
   const location = useLocation();
 
-  console.log(location)
-
   return (
   <S.StyledHeader>
     <S.HeaderWrapper>

@@ -9,7 +9,7 @@ function NotFoundPage (): JSX.Element {
       <S.ContentWrapper>
         <S.PageHeading>
           <PageTitle>404</PageTitle>
-          <PageSubtext>Страница не найдена.</PageSubtext>
+          <PageSubtext>Страница не найдена</PageSubtext>
         </S.PageHeading>
         <S.QuestDescription>
           Такой страницы не существует. Но у нас есть <Link to='/' style={{color: '#d4790e'}}><b>множество квестов.</b></Link>
