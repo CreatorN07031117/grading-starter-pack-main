@@ -96,7 +96,7 @@ function DetailedQuest (): JSX.Element {
               {quest.description}
             </S.QuestDescription>
 
-            <S.QuestBookingBtn onClick={onBookingBtnClick}>
+            <S.QuestBookingBtn onClick={onBookingBtnClick}  data-testid="booking-btn">
               Забронировать
             </S.QuestBookingBtn>
           </S.PageDescription>
